@@ -10,5 +10,6 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 public @interface FirstLetterCapitalized {
 
+    //作用范围的属性 默认是全部属性值
     Range value() default Range.ALL;
 }

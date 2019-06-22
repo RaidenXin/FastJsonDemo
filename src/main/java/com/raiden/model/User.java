@@ -13,12 +13,10 @@ public class User {
 
     @Ignore
     private String name;
-    @Ignore
     @DataToString(newScale = 3,roundingMode = BigDecimal.ROUND_HALF_UP)
     private BigDecimal age;
-    @JSONField(name = "Id")
+    @JSONField(name = "userId")
     private String id;
-    @Ignore
     private boolean girl;
 
     public String getId() {
