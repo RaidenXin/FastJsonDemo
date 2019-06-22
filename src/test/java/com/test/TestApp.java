@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.raiden.model.User;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 public class TestApp {
 
     @Test
@@ -11,7 +13,7 @@ public class TestApp {
         User user = new User();
         user.setId("1");
         user.setName("zhangsan");
-        user.setAge("12");
+        user.setAge(new BigDecimal(12.5));
         System.out.println(JSON.toJSONString(user));
     }
 }

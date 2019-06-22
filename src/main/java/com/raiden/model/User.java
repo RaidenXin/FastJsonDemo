@@ -1,9 +1,12 @@
 package com.raiden.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.raiden.annotation.DataToString;
 import com.raiden.annotation.FirstLetterCapitalized;
 import com.raiden.annotation.Ignore;
 import com.raiden.annotation.Range;
+
+import java.math.BigDecimal;
 
 @FirstLetterCapitalized(Range.PART)
 public class User {
@@ -11,8 +14,9 @@ public class User {
     @Ignore
     private String name;
     @Ignore
-    private String age;
-    @JSONField(name = "userId")
+    @DataToString(newScale = 3,roundingMode = BigDecimal.ROUND_HALF_UP)
+    private BigDecimal age;
+    @JSONField(name = "Id")
     private String id;
     @Ignore
     private boolean girl;
@@ -25,11 +29,11 @@ public class User {
         this.id = id;
     }
 
-    public String getAge() {
+    public BigDecimal getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(BigDecimal age) {
         this.age = age;
     }
 

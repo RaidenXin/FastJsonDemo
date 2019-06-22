@@ -8,6 +8,10 @@ import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 
+/**
+ *该过滤器针对属性名
+ * 首字母大写过滤器
+ */
 public class FirstLetterCapitalizedFilter implements NameFilter {
     @Override
     public String process(Object o, String name, Object o1) {
