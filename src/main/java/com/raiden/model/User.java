@@ -1,9 +1,9 @@
 package com.raiden.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.raiden.annotation.DataToString;
-import com.raiden.annotation.FirstLetterCapitalized;
-import com.raiden.annotation.Ignore;
+import com.raiden.fastjson.annotation.DataToString;
+import com.raiden.fastjson.annotation.FirstLetterCapitalized;
+import com.raiden.fastjson.annotation.Ignore;
 
 import java.math.BigDecimal;
 

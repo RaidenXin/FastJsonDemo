@@ -1,11 +1,13 @@
-package com.raiden.annotation;
+package com.raiden.fastjson.annotation;
 
 import java.lang.annotation.*;
 import java.math.BigDecimal;
 
 /**
- * 用于解决BigDecimal序列化精度问题
- * 将BigDecimal转成String
+ * @创建人:Raiden
+ * @Descriotion:用于解决BigDecimal序列化精度问题，将BigDecimal转成String
+ * @Date:Created in 9:54 2019/6/22
+ * @Modified By:
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

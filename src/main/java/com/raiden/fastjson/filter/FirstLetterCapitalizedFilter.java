@@ -1,15 +1,18 @@
-package com.raiden.filter;
+package com.raiden.fastjson.filter;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.NameFilter;
-import com.raiden.annotation.FirstLetterCapitalized;
-import com.raiden.annotation.Ignore;
+import com.raiden.fastjson.annotation.FirstLetterCapitalized;
+import com.raiden.fastjson.annotation.Ignore;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 
 /**
- *该过滤器针对属性名
- * 首字母大写过滤器
+ * @创建人:Raiden
+ * @Descriotion:该过滤器针对属性名，首字母大写过滤器
+ * @Date:Created in 9:54 2019/6/22
+ * @Modified By:
  */
 public class FirstLetterCapitalizedFilter implements NameFilter {
     @Override
@@ -25,7 +28,7 @@ public class FirstLetterCapitalizedFilter implements NameFilter {
                 //通过名称获得改域 如果使用了JSONField自定义域名会出现找不到 报错的情况
                 Field field = o.getClass().getDeclaredField(name);
                 //看看域上是否有忽略的注解 如果有则不改变其属性名
-                if (!field.isAnnotationPresent(Ignore.class)){
+                if (!field.isAnnotationPresent(Ignore.class) && !field.isAnnotationPresent(JSONField.class)){
                     //将属性名首字母大写返回
                     return firstLetterCapitalized(fieldName);
                 }

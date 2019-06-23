@@ -1,13 +1,15 @@
-package com.raiden.filter;
+package com.raiden.fastjson.filter;
 
 import com.alibaba.fastjson.serializer.ValueFilter;
-import com.raiden.annotation.DataToString;
+import com.raiden.fastjson.annotation.DataToString;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
-
 /**
- *自定义BigDecimal序列化 精度值处理过滤器
+ * @创建人:Raiden
+ * @Descriotion:自定义BigDecimal序列化，精度值处理过滤器
+ * @Date:Created in 9:54 2019/6/22
+ * @Modified By:
  */
 public class DataToStringFilter implements ValueFilter {
     @Override
