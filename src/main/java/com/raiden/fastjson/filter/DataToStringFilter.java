@@ -2,7 +2,7 @@ package com.raiden.fastjson.filter;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.ValueFilter;
-import com.raiden.fastjson.FieldNameUtils;
+import com.raiden.fastjson.util.FieldNameUtils;
 import com.raiden.fastjson.annotation.DataToString;
 import com.raiden.fastjson.annotation.FirstLetterCapitalized;
 

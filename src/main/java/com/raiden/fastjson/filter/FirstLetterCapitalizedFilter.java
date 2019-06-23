@@ -2,10 +2,9 @@ package com.raiden.fastjson.filter;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.NameFilter;
-import com.raiden.fastjson.FieldNameUtils;
+import com.raiden.fastjson.util.FieldNameUtils;
 import com.raiden.fastjson.annotation.FirstLetterCapitalized;
 import com.raiden.fastjson.annotation.Ignore;
-import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 

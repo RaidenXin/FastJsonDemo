@@ -1,4 +1,4 @@
-package com.raiden.fastjson;
+package com.raiden.fastjson.util;
 
 /**
  * @创建人:Raiden
