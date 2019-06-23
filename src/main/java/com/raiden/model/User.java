@@ -7,7 +7,7 @@ import com.raiden.fastjson.annotation.Ignore;
 
 import java.math.BigDecimal;
 
-@FirstLetterCapitalized(Range.PART)
+@FirstLetterCapitalized
 public class User {
 
     @Ignore
