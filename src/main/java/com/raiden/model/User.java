@@ -4,7 +4,6 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.raiden.annotation.DataToString;
 import com.raiden.annotation.FirstLetterCapitalized;
 import com.raiden.annotation.Ignore;
-import com.raiden.annotation.Range;
 
 import java.math.BigDecimal;
 
