@@ -5,6 +5,7 @@ import com.alibaba.fastjson.serializer.ValueFilter;
 import com.raiden.fastjson.util.FieldNameUtils;
 import com.raiden.fastjson.annotation.DataToString;
 import com.raiden.fastjson.annotation.FirstLetterCapitalized;
+import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -17,6 +18,9 @@ import java.math.BigDecimal;
 public class DataToStringFilter implements ValueFilter {
     @Override
     public Object process(Object instance, String name, Object value) {
+        if (null == instance || StringUtils.isEmpty(name) || null == value){
+            return value;
+        }
         //判断下实例是不是BigDecimal
         if (value instanceof BigDecimal){
             Class<?> instanceClazz = instance.getClass();
