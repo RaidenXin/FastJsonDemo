@@ -26,8 +26,6 @@ public class FirstLetterCapitalizedFilter implements NameFilter {
         String fieldName = Boolean.class.isInstance(value)? "is" + FieldNameUtils.firstLetterCapitalized(name) : name;
         //判断类上是否有首字母大写的注解
         if (clazz.isAnnotationPresent(FirstLetterCapitalized.class)){
-            //获取注解
-            FirstLetterCapitalized firstLetterCapitalized = clazz.getAnnotation(FirstLetterCapitalized.class);
             try {
                 //通过名称获得改域 如果使用了JSONField自定义域名会出现找不到报错的情况
                 Field field = clazz.getDeclaredField(name);
