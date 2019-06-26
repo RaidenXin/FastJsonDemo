@@ -10,10 +10,17 @@ public class TestApp {
 
     @Test
     public void test(){
-        User user = new User();
-        user.setId("1");
-        user.setName("zhangsan");
-        user.setAge(new BigDecimal(12.5));
-        System.out.println(JSON.toJSONString(user));
+        Double d = 0.0;
+        print(d);
+        boolean b1 = false;
+        Boolean b2 = true;
+        System.out.println("b1:" + Boolean.class.isInstance(b1));
+        System.out.println("b2:" + Boolean.class.isInstance(b2));
+    }
+
+    private void print(Object o){
+        if (o instanceof Double){
+            System.out.println(o.toString());
+        }
     }
 }

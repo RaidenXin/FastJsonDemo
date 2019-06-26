@@ -41,4 +41,11 @@ public class FirstLetterCapitalizedFilter implements NameFilter {
         }
         return fieldName;
     }
+
+    private String checkBoolean(Class<?> clazz,String name,Object value){
+        if (!name.toLowerCase().startsWith("is")){
+            return "is" + FieldNameUtils.firstLetterCapitalized(name);
+        }
+        return name;
+    }
 }
