@@ -10,7 +10,7 @@ public class TestApp {
 
     @Test
     public void test(){
-        Double d = 0.0;
+        double d = 0.0;
         print(d);
         boolean b1 = false;
         Boolean b2 = true;
@@ -19,7 +19,7 @@ public class TestApp {
     }
 
     private void print(Object o){
-        if (o instanceof Double){
+        if (o instanceof Number){
             System.out.println(o.toString());
         }
     }

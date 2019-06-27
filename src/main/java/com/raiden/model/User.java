@@ -19,5 +19,8 @@ public class User {
     @JSONField(name = "userId")
     private String id;
 
-    private boolean isGirl;
+    private boolean girl;
+
+    @DataToString(newScale = 3,roundingMode = BigDecimal.ROUND_HALF_UP)
+    private double salary;
 }

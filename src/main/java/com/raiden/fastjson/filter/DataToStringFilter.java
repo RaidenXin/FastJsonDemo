@@ -21,8 +21,8 @@ public class DataToStringFilter implements ValueFilter {
         if (null == instance || StringUtils.isEmpty(name) || null == value){
             return value;
         }
-        //判断下实例是不是BigDecimal
-        if (value instanceof BigDecimal){
+        //判断下实例是不是BigDecimal 或者是 Double
+        if (value instanceof Double || value instanceof BigDecimal){
             Class<?> instanceClazz = instance.getClass();
             //如果存在这个注解说明类名可能被更改
             if (instanceClazz.isAnnotationPresent(FirstLetterCapitalized.class)){
@@ -59,6 +59,9 @@ public class DataToStringFilter implements ValueFilter {
         int newScale = dataToString.newScale();
         //获取舍入策略
         int roundingMode = dataToString.roundingMode();
+        if (value instanceof Double){
+            return new BigDecimal((Double) value).setScale(newScale, roundingMode).toString();
+        }
         //返回保留值
         return ((BigDecimal) value).setScale(newScale, roundingMode).toString();
     }

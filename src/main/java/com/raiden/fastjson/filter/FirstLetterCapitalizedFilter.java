@@ -22,29 +22,45 @@ public class FirstLetterCapitalizedFilter implements NameFilter {
             return name;
         }
         Class<?> clazz = instance.getClass();
-        //判断下是不是布尔值 如果是首字母大写并在前面加上is
-        String fieldName = Boolean.class.isInstance(value)? "is" + FieldNameUtils.firstLetterCapitalized(name) : name;
         //判断类上是否有首字母大写的注解
         if (clazz.isAnnotationPresent(FirstLetterCapitalized.class)){
+            //是否是boolean实例
+            boolean isBooleanInstance = Boolean.class.isInstance(value);
             try {
                 //通过名称获得改域 如果使用了JSONField自定义域名会出现找不到报错的情况
                 Field field = clazz.getDeclaredField(name);
-                //看看域上是否有忽略的注解 如果有则不改变其属性名
-                if (!field.isAnnotationPresent(Ignore.class) && !field.isAnnotationPresent(JSONField.class)){
+                //看看域上是否有忽略的注解和JSONField注解 或者有 忽略字段注解 如果有则不改变其属性名
+                if (field.isAnnotationPresent(Ignore.class) || field.isAnnotationPresent(JSONField.class)){
+                    return name;
+                }else{
+                    //判断下是不是布尔值 如果是切name不是以is开头的 首字母大写并在前面加上is
+                    if (isBooleanInstance && !name.toLowerCase().startsWith("is")){
+                        return "Is" + FieldNameUtils.firstLetterCapitalized(name);
+                    }
                     //将属性名首字母大写返回
-                    return FieldNameUtils.firstLetterCapitalized(fieldName);
+                    return FieldNameUtils.firstLetterCapitalized(name);
                 }
             } catch (NoSuchFieldException e) {
                 //用JSONField自定义属性名称可能会找不到域 因此忽略此报错 返回自定义的名称就行
-                return name;
+                return checkBoolean(clazz, name, isBooleanInstance);
             }
         }
-        return fieldName;
+        return name;
     }
 
-    private String checkBoolean(Class<?> clazz,String name,Object value){
-        if (!name.toLowerCase().startsWith("is")){
-            return "is" + FieldNameUtils.firstLetterCapitalized(name);
+    private String checkBoolean(Class<?> clazz, String name,boolean isBooleanInstance){
+        if (isBooleanInstance){
+            try {
+                //布尔值找不到域 存在2种可能1是用了JSONField注解 2 是使用了小写的is开头 如 isShow 这里的name会是show
+                String fieldName = "is" + FieldNameUtils.firstLetterCapitalized(name);
+                //所以拼装好名字之后 在尝试找一次域
+                clazz.getDeclaredField(fieldName);
+                //如果找到了返回 带is的
+                return fieldName;
+            } catch (NoSuchFieldException e) {
+                //如果还是获取不到证明使用的是 JSONField注解
+                return name;
+            }
         }
         return name;
     }
