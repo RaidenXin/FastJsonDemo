@@ -14,6 +14,7 @@ public class UserController {
         User user = new User();
         user.setId("1");
         user.setName("zhangsan");
+        user.setSalary(123.00004273213214);
         user.setAge(new BigDecimal(113.880));
         return user;
     }
