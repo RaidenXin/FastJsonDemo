@@ -50,18 +50,16 @@ public class FirstLetterCapitalizedFilter implements NameFilter {
 
     private String checkBoolean(Class<?> clazz, String name,boolean isBooleanInstance){
         if (isBooleanInstance){
-            try {
-                //布尔值找不到域 存在2种可能1是用了JSONField注解 2 是使用了小写的is开头 如 isShow 这里的name会是show
-                String fieldName = "is" + FieldNameUtils.firstLetterCapitalized(name);
-                //所以拼装好名字之后 在尝试找一次域
-                clazz.getDeclaredField(fieldName);
-                //如果找到了返回 带is的
+            //布尔值找不到域 存在2种可能1是用了JSONField注解 2 是使用了小写的is开头 如 isShow 这里的name会是show
+            String fieldName = "is" + FieldNameUtils.firstLetterCapitalized(name);
+            //所以拼装好名字之后 在尝试找一次域
+            Field field = FieldUtils.getField(clazz, fieldName);
+            //如果找到了返回 带is的
+            if (null != field){
                 return fieldName;
-            } catch (NoSuchFieldException e) {
-                //如果还是获取不到证明使用的是 JSONField注解
-                return name;
             }
         }
+        //如果还是获取不到证明使用的是 JSONField注解
         return name;
     }
 }
