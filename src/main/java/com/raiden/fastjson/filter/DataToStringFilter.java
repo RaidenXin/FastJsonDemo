@@ -5,6 +5,7 @@ import com.alibaba.fastjson.serializer.ValueFilter;
 import com.raiden.fastjson.util.FieldNameUtils;
 import com.raiden.fastjson.annotation.DataToString;
 import com.raiden.fastjson.annotation.FirstLetterCapitalized;
+import com.raiden.fastjson.util.FieldUtils;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
@@ -28,19 +29,14 @@ public class DataToStringFilter implements ValueFilter {
             if (instanceClazz.isAnnotationPresent(FirstLetterCapitalized.class)){
                 name = FieldNameUtils.firstLetterLowercase(name);
             }
-            try {
-                //如果是则获取该域 如果使用了JSONField自定义域名会出现找不到报错的情况
-                Field field = instance.getClass().getDeclaredField(name);
-                //检查该域是否有 DataToString注解
-                if (field.isAnnotationPresent(DataToString.class)){
-                    return valueFormat(value, field);
-                }
-            } catch (NoSuchFieldException e) {
-                //如果报错了说明属性名称不正确 要获取真正的属性
-                Field field = getFieldName(instanceClazz, name);
-                if (null != field){
-                    return valueFormat(value, field);
-                }
+            //如果是则获取该域 如果使用了JSONField自定义域名会出现找不到报错的情况
+            Field field = FieldUtils.getField(instanceClazz, name);
+            if (null == field){
+                field = getField(instanceClazz, name);
+            }
+            //检查该域是否有 DataToString注解
+            if (null != field && field.isAnnotationPresent(DataToString.class)){
+                return valueFormat(value, field);
             }
         }
         return value;
@@ -72,18 +68,24 @@ public class DataToStringFilter implements ValueFilter {
      * @param name
      * @return
      */
-    private Field getFieldName(Class<?> instanceClazz,String name){
-        //如果出现报错 则可能属性名称被修改了 就要遍历全部的域
+    private Field getField(Class<?> instanceClazz,String name){
+        Class<?> superclass = instanceClazz.getSuperclass();
+        if (null == superclass){
+            //父类为空证明该类为Object 不递归了返回吧
+            return null;
+        }
+        //遍历全部的域
         Field[] fields = instanceClazz.getDeclaredFields();
         for (Field field : fields){
-            if (field.isAnnotationPresent(JSONField.class)){
-                JSONField jsonField = field.getAnnotation(JSONField.class);
-                if (name.equals(jsonField.name())){
-                    field.setAccessible(true);
-                    return field;
-                }
+            if (!field.isAnnotationPresent(JSONField.class)){
+                continue;
+            }
+            JSONField jsonField = field.getAnnotation(JSONField.class);
+            if (name.equals(jsonField.name())){
+                field.setAccessible(true);
+                return field;
             }
         }
-        return null;
+        return getField(superclass, name);
     }
 }

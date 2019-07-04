@@ -5,6 +5,7 @@ import com.alibaba.fastjson.serializer.NameFilter;
 import com.raiden.fastjson.util.FieldNameUtils;
 import com.raiden.fastjson.annotation.FirstLetterCapitalized;
 import com.raiden.fastjson.annotation.Ignore;
+import com.raiden.fastjson.util.FieldUtils;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
@@ -26,9 +27,9 @@ public class FirstLetterCapitalizedFilter implements NameFilter {
         if (clazz.isAnnotationPresent(FirstLetterCapitalized.class)){
             //是否是boolean实例
             boolean isBooleanInstance = Boolean.class.isInstance(value);
-            try {
-                //通过名称获得改域 如果使用了JSONField自定义域名会出现找不到报错的情况
-                Field field = clazz.getDeclaredField(name);
+            //通过名称获得改域 如果使用了JSONField自定义域名会出现找不到的情况
+            Field field = FieldUtils.getField(clazz, name);
+            if (null != field){
                 //看看域上是否有忽略的注解和JSONField注解 或者有 忽略字段注解 如果有则不改变其属性名
                 if (field.isAnnotationPresent(Ignore.class) || field.isAnnotationPresent(JSONField.class)){
                     return name;
@@ -40,10 +41,9 @@ public class FirstLetterCapitalizedFilter implements NameFilter {
                     //将属性名首字母大写返回
                     return FieldNameUtils.firstLetterCapitalized(name);
                 }
-            } catch (NoSuchFieldException e) {
-                //用JSONField自定义属性名称可能会找不到域 因此忽略此报错 返回自定义的名称就行
-                return checkBoolean(clazz, name, isBooleanInstance);
             }
+            //用JSONField自定义属性名称可能会找不到域 因此忽略此报错 返回自定义的名称就行
+            return checkBoolean(clazz, name, isBooleanInstance);
         }
         return name;
     }

@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 @Data
 @FirstLetterCapitalized
-public class User {
+public class User extends Base{
 
     @Ignore
     private String name;
