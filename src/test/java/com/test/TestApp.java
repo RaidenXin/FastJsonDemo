@@ -16,10 +16,10 @@ public class TestApp {
 
     @Test
     public void test(){
-        String s = "\n\n\n\r\n12\r\n34\r\n1";
-        Character[] pattem = {'\r','\n'};
-        String s2 = StringUtils.trimStart(s, pattem);
-        System.out.println(s2);
+        double d = 5.00;
+        BigDecimal bigDecimal = new BigDecimal(d);
+        BigDecimal bigDecimal1 = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).stripTrailingZeros();
+        System.out.println(bigDecimal1.toString());
     }
 
     public static int compareVersion(String currentVersion, String targetVersion) {

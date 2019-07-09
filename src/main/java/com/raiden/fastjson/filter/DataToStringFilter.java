@@ -82,7 +82,6 @@ public class DataToStringFilter implements ValueFilter {
             }
             JSONField jsonField = field.getAnnotation(JSONField.class);
             if (name.equals(jsonField.name())){
-                field.setAccessible(true);
                 return field;
             }
         }

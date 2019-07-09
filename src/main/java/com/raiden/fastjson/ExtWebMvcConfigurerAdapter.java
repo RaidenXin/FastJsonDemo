@@ -7,6 +7,8 @@ import com.raiden.fastjson.filter.FirstLetterCapitalizedFilter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 import java.util.List;
 /**
  * @创建人:Raiden
@@ -15,11 +17,11 @@ import java.util.List;
  * @Modified By:
  */
 @Configuration
-public class ExtWebMvcConfigurerAdapter extends WebMvcConfigurationSupport {
+public class ExtWebMvcConfigurerAdapter implements WebMvcConfigurer {
 
-    protected void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         //new一个自定义的转换器
-        FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonMessageConverter();
+        FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
         //过滤器链
         SerializeFilter[] filters = {new FirstLetterCapitalizedFilter(), new DataToStringFilter()};
         //将过滤器链放入自定义转换器中
@@ -27,6 +29,6 @@ public class ExtWebMvcConfigurerAdapter extends WebMvcConfigurationSupport {
         //将转换器放入转换器链中
         converters.add(fastJsonHttpMessageConverter);
         //将转换器链放入配置管理器中
-        super.configureMessageConverters(converters);
+//        super.configureMessageConverters(converters);
     }
 }

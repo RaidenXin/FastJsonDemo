@@ -8,6 +8,7 @@ import java.lang.annotation.*;
  * @Date:Created in 9:54 2019/6/22
  * @Modified By:
  */
+@Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface FirstLetterCapitalized {
